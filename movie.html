@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineBook - Movie Booking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+function toggleMenu(){
+    const nav =
+    document.querySelector(".navbar nav");
+    nav.classList.toggle("active");
+}
+const movies = [
+    {
+        name:"Avengers: Endgame",
+        genre:"Action",
+        rating:"8.4",
+        price:220,
+        image:
+        "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+        name:"Interstellar",
+        genre:"Sci-Fi",
+        rating:"8.7",
+        price:250,
+        image:
+        "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+        name:"Jawan",
+        genre:"Action",
+        rating:"7.8",
+        price:200,
+        image:
+        "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+        name:"The Grand Adventure",
+        genre:"Drama",
+        rating:"8.1",
+        price:190,
+        image:
+        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=85"
+    }
+];
+const movieContainer =
+document.getElementById("movieContainer");
+if(movieContainer){
+    movies.forEach((movie,index)=>{
+        movieContainer.innerHTML += `
+        <div class="movie-card">
+            <img
+            src="${movie.image}"
+            alt="${movie.name}"
+            >
+            <div class="movie-info">
+                <h3>
+                    ${movie.name}
+                </h3>
+                <p>
+                    ⭐ ${movie.rating}
+                    &nbsp; | &nbsp;
+                    ${movie.genre}
+                </p>
+                <button
+                class="btn primary"
+                onclick="bookMovie(${index})">
+                    Book Now · ₹${movie.price}
+                </button>
+            </div>
+        </div>
+        `;
+    });
+}
+function bookMovie(index){
+    const movie =
+    movies[index];
+    localStorage.setItem(
+        "selectedMovie",
+        JSON.stringify(movie)
+    );
+    window.location.href =
+    "seat-selection.html";
+}
+</script>
+
+<body>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+html{
+    scroll-behavior:smooth;
+}
+body{
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+    background:#080b14;
+    color:white;
+    line-height:1.6;
+}
+.navbar{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:#0d111d;
+    border-bottom:1px solid #242b3c;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+.logo{
+    font-size:27px;
+    font-weight:900;
+}
+.logo span,
+.footer-box span{
+    color:#f43f5e;
+}
+.navbar nav{
+    display:flex;
+    gap:8px;
+}
+.navbar nav a{
+    text-decoration:none;
+    color:#cbd5e1;
+    padding:9px 13px;
+    border-radius:8px;
+    transition:.3s;
+}
+.navbar nav a:hover{
+    background:#f43f5e;
+    color:white;
+}
+.menu-btn{
+    display:none;
+    border:none;
+    background:none;
+    color:white;
+    font-size:25px;
+}
+.hero{
+    min-height:650px;
+    display:flex;
+    align-items:center;
+    background:
+    linear-gradient(
+        90deg,
+        rgba(3,6,15,.97),
+        rgba(3,6,15,.70),
+        rgba(3,6,15,.30)
+    ),
+    url(
+    "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1800&q=85"
+    );
+    background-size:cover;
+    background-position:center;
+}
+.hero-content{
+    max-width:1200px;
+    width:100%;
+    margin:auto;
+    padding:70px 6%;
+}
+.small-title{
+    color:#fb7185;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:3px;
+    margin-bottom:10px;
+}
+.hero h1{
+    font-size:clamp(45px,7vw,80px);
+    line-height:1.05;
+    margin-bottom:25px;
+}
+.hero h1 span{
+    color:#f43f5e;
+}
+.hero-content > p:not(.small-title){
+    max-width:600px;
+    color:#cbd5e1;
+    font-size:18px;
+}
+.hero-buttons{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+.btn{
+    display:inline-block;
+    padding:12px 23px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+    border:1px solid transparent;
+}
+.primary{
+    background:#f43f5e;
+    color:white;
+}
+.primary:hover{
+    background:#e11d48;
+    transform:translateY(-2px);
+}
+.secondary{
+    border-color:#475569;
+    color:white;
+    background:#111827;
+}
+.secondary:hover{
+
+    background:#1e293b;
+}
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:80px 6%;
+}
+.section-heading{
+    margin-bottom:35px;
+}
+.section-heading h2{
+    font-size:40px;
+}
+.section-heading h2 span{
+    color:#f43f5e;
+}
+.feature-container{
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+    gap:20px;
+}
+.feature-card{
+    background:#111827;
+    border:1px solid #202a3d;
+    padding:28px;
+    border-radius:16px;
+    transition:.3s;
+}
+.feature-card:hover{
+    transform:translateY(-8px);
+    border-color:#f43f5e;
+}
+.feature-icon{
+    font-size:35px;
+    margin-bottom:15px;
+}
+.feature-card h3{
+    margin-bottom:8px;
+}
+.feature-card p{
+    color:#94a3b8;
+}
+.movie-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+    gap:22px;
+    margin-bottom:35px;
+}
+.movie-card{
+    overflow:hidden;
+    background:#111827;
+    border-radius:16px;
+    border:1px solid #202a3d;
+    transition:.3s;
+}
+.movie-card:hover{
+    transform:translateY(-7px);
+    border-color:#f43f5e;
+}
+.movie-card img{
+    width:100%;
+    height:330px;
+    object-fit:cover;
+}
+.movie-info{
+    padding:17px;
+}
+.movie-info h3{
+    font-size:20px;
+}
+.movie-info p{
+    color:#94a3b8;
+    font-size:14px;
+    margin:5px 0 15px;
+}
+.movie-info .btn{
+    width:100%;
+    text-align:center;
+}
+.center{
+    text-align:center;
+}
+.about-home{
+    display:grid;
+    grid-template-columns:
+    1fr 1fr;
+    gap:60px;
+    align-items:center;
+    max-width:1200px;
+    margin:auto;
+    padding:80px 6%;
+}
+.about-image img{
+    width:100%;
+    border-radius:20px;
+    display:block;
+}
+.about-content h2{
+    font-size:42px;
+    line-height:1.2;
+    margin-bottom:20px;
+}
+.about-content h2 span{
+    color:#f43f5e;
+}
+.about-content p:not(.small-title){
+    color:#94a3b8;
+    margin-bottom:15px;
+}
+.stats{
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+    background:#111827;
+    border-top:1px solid #20283a;
+    border-bottom:1px solid #20283a;
+}
+.stats div{
+    text-align:center;
+    padding:40px;
+    border-right:1px solid #20283a;
+}
+.stats h2{
+    color:#f43f5e;
+    font-size:38px;
+}
+.stats p{
+    color:#94a3b8;
+}
+footer{
+    background:#060811;
+    margin-top:60px;
+}
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:60px 6%;
+    display:grid;
+    grid-template-columns:
+    2fr 1fr 1fr 1.5fr;
+    gap:40px;
+}
+.footer-box h3{
+    margin-bottom:15px;
+}
+.footer-box p{
+    color:#94a3b8;
+    font-size:14px;
+    margin:7px 0;
+}
+.footer-box a{
+    display:block;
+    color:#94a3b8;
+    text-decoration:none;
+    margin:7px 0;
+    font-size:14px;
+}
+.footer-box a:hover{
+    color:#f43f5e;
+}
+.copyright{
+    border-top:1px solid #20283a;
+    text-align:center;
+    padding:20px;
+    color:#64748b;
+    font-size:13px;
+}
+@media(max-width:1000px){
+    .feature-container{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+    .movie-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+    .footer-container{
+        grid-template-columns:
+        1fr 1fr;
+    }
+}
+@media(max-width:700px){
+    .navbar nav{
+        display:none;
+        position:absolute;
+        top:75px;
+        left:0;
+        right:0;
+        background:#0d111d;
+        flex-direction:column;
+        padding:15px;
+    }
+    .navbar nav.active{
+        display:flex;
+    }
+    .menu-btn{
+        display:block;
+    }
+    .hero{
+        min-height:600px;
+    }
+    .feature-container,
+    .movie-grid,
+    .about-home,
+    .stats{
+        grid-template-columns:1fr;
+    }
+    .stats div{
+        border-right:none;
+        border-bottom:1px solid #20283a;
+    }
+    .footer-container{
+        grid-template-columns:1fr;
+    }
+    .about-content h2{
+        font-size:34px;
+    }
+}
+</style>
+<header class="navbar">
+    <div class="logo">
+        🎬 Cine<span>Book</span>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="contact.html">Contact</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+</header>
+<section class="hero">
+    <div class="hero-content">
+        <p class="small-title">WELCOME TO CINEBOOK</p>
+        <h1>
+            Your Movie.
+            <br>
+            Your Seat.
+            <br>
+            <span>Your Experience.</span>
+        </h1>
+        <p>
+            Discover the latest movies, choose your favourite seats
+            and book your tickets easily.
+        </p>
+        <div class="hero-buttons">
+            <a href="movies.html" class="btn primary">
+                Explore Movies
+            </a>
+            <a href="about.html" class="btn secondary">
+                Learn More
+            </a>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="section-heading">
+        <p class="small-title">WHY CINEBOOK?</p>
+        <h2>
+            Everything you need for
+            <span>movie night.</span>
+        </h2>
+    </div>
+    <div class="feature-container">
+        <div class="feature-card">
+            <div class="feature-icon">🎬</div>
+            <h3>Latest Movies</h3>
+            <p>
+                Explore popular and latest movies
+                from different genres.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💺</div>
+            <h3>Easy Seat Selection</h3>
+            <p>
+                Choose your favourite seats
+                with our interactive seat layout.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h3>Easy Payment</h3>
+            <p>
+                Complete your booking through
+                our simple checkout process.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎟️</div>
+            <h3>Digital Ticket</h3>
+            <p>
+                Get your booking confirmation
+                instantly after payment.
+            </p>
+        </div>
+    </div>
+</section>
+<section class="section movie-section">
+    <div class="section-heading">
+        <p class="small-title">NOW SHOWING</p>
+        <h2>
+            Popular <span>Movies</span>
+        </h2>
+    </div>
+    <div class="movie-grid" id="movieContainer">
+    </div>
+    <div class="center">
+        <a href="movies.html" class="btn primary">
+            View All Movies
+        </a>
+    </div>
+</section>
+<section class="about-home">
+    <div class="about-image">
+        <img
+        src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
+        alt="Cinema">
+    </div>
+    <div class="about-content">
+        <p class="small-title">
+            ABOUT CINEBOOK
+        </p>
+        <h2>
+            Making movie booking
+            <span>simple & enjoyable.</span>
+        </h2>
+        <p>
+            CineBook is a modern movie ticket booking platform
+            designed to make your cinema experience faster,
+            easier and more enjoyable.
+        </p>
+        <p>
+            Browse movies, select your preferred seats,
+            complete your booking and enjoy your movie.
+        </p>
+        <a href="about.html" class="btn primary">
+            About Us
+        </a>
+    </div>
+</section>
+<section class="stats">
+    <div>
+        <h2>50+</h2>
+        <p>Movies</p>
+    </div>
+    <div>
+        <h2>25+</h2>
+        <p>Cinema Partners</p>
+    </div>
+    <div>
+        <h2>10K+</h2>
+        <p>Happy Customers</p>
+    </div>
+    <div>
+        <h2>24/7</h2>
+        <p>Online Booking</p>
+    </div>
+</section>
+<footer>
+    <div class="footer-container">
+        <div class="footer-box">
+            <h2>🎬 Cine<span>Book</span></h2>
+            <p>
+                Your simple and modern movie
+                ticket booking platform.
+            </p>
+        </div>
+        <div class="footer-box">
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+        </div>
+        <div class="footer-box">
+            <h3>Support</h3>
+            <a href="contact.html">Contact Us</a>
+            <a href="blogs.html">Blogs</a>
+            <a href="profile.html">My Profile</a>
+        </div>
+        <div class="footer-box">
+            <h3>Contact</h3>
+            <p>📍 New Delhi, India</p>
+            <p>📞 +91 98765 43210</p>
+            <p>✉ support@cinebook.com</p>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2026 CineBook. All Rights Reserved.
+    </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
